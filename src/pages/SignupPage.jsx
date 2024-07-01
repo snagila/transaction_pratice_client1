@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { createUserAxios } from "../axios/userAxios";
 
 const SignupPage = () => {
   const initialState = {
@@ -20,6 +21,11 @@ const SignupPage = () => {
       [name]: value,
     });
   };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    createUserAxios(formData);
+  };
   return (
     <Container>
       <Row className="d-flex align-items-center justiy-content-center vh-100">
@@ -34,7 +40,7 @@ const SignupPage = () => {
         <Col>
           <Stack className="shadow-lg border rounded p-4">
             <h1>Sign Up</h1>
-            <Form>
+            <Form onSubmit={handleOnSubmit}>
               <Form.Group className="mb-3">
                 <Form.Label className="fw-bold">Full Name</Form.Label>
                 <Form.Control

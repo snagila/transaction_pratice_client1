@@ -1,10 +1,28 @@
 import { useState } from "react";
-import { Col, Container, Form, Row, Stack } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
-  const [form, setForm] = useState({});
+  const dispatch = useDispatch();
+  const initialState = {
+    email: "",
+    password: "",
+  };
+  const [loginForm, setLoginForm] = useState(initialState);
+  const { email, password } = loginForm;
 
+  const handleOnchange = (e) => {
+    const { name, value } = e.target;
+    setLoginForm({
+      ...loginForm,
+      [name]: value,
+    });
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <Container>
       <Row className="d-flex align-items-center justiy-content-center vh-100">
@@ -22,14 +40,27 @@ const LoginPage = () => {
             <h1>Login</h1>
             {/* Login Form */}
             <Form>
-              <Form.Group>
-                <Form.Label>Email:</Form.Label>
-                <Form.Control />
+              <Form.Group className="mb-3">
+                <Form.Label className="fw-bold">Email:</Form.Label>
+                <Form.Control
+                  name="email"
+                  value={email}
+                  placeholder="Enter your email"
+                  onChange={handleOnchange}
+                />
               </Form.Group>
-              <Form.Group>
-                <Form.Label>Password:</Form.Label>
-                <Form.Control />
+              <Form.Group className="mb-3">
+                <Form.Label className="fw-bold">Password:</Form.Label>
+                <Form.Control
+                  name="password"
+                  value={password}
+                  placeholder="Enter your password"
+                  onChange={handleOnchange}
+                />
               </Form.Group>
+              <Button type="submit" variant="primary">
+                Login
+              </Button>
             </Form>
             <p>Don&apos;t have account?</p>
             <Link to="/signup">Sign up</Link>
